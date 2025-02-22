@@ -13,41 +13,31 @@ function SignUp() {
    })
 
   //  <-------- USEROBJECT STATE CHANGED  BY INPUT VALUES ------->
+  
    const userValueChanged = (e) => {
-    // console.log( 'NameATtribute',e.target.name);
-    // console.log( 'VALUE',e.target.value);
-    
-     
     setUserObj(  
       {...userObj, [e.target.name] : e.target.value      // re assign the key of obj e.g =>   userEmail    :  moiz@mail.com
 
       })
-
-      
-      
     }
     
-     //  <-------- SET DATA IN LOCALSTORAGE FUNCTION  ------->
+  //  <-------- HANDLE SIGNUP FUNCTION PERFORM AUTHNTICATION TASK WITH FIREBSE  ------->
 
-    const  onSubmit = async (e) => {
+   const  handleSignUp = async (e) => {
      e.preventDefault();   // Page ko Refresh nhi hone da rha
 
-  
-     await createUserWithEmailAndPassword(auth, userObj.userEmail, userObj.userPass, userObj.userName)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log(user);
-            navigate("/login")
-            // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.error(errorCode, errorMessage);
-            // ..
-        });
-    }  
+       try{                                   /// SET IN FIREBSE USER EMAIL AND PASSWORD
+          let userData =  await createUserWithEmailAndPassword(auth, userObj.userEmail, userObj.userPass, userObj.userName)
+          console.log(userData);
+          alert('SIGN UP SUCESSFULL NOW LOGIN ✔')
+          navigate('/login')
+          
+        }
+        catch(error)  {
+            // console.error(error.code, error.msg);
+            alert(`${error.code} ❌`)
+        }
+   }  
 
   return (
     <div className="w-[420px] mx-auto md:mt-7"> 
@@ -57,7 +47,7 @@ function SignUp() {
 
         <h1 className="font-bold text-3xl">SignUp</h1>
 
-         <form onSubmit={onSubmit} className="mt-5 leading-10 rounded-md  py-3">
+         <form onSubmit={handleSignUp} className="mt-5 leading-10 rounded-md  py-3">
           <div className="border-1 rounded-sm px-3 py-2">
          <input
            type="text"

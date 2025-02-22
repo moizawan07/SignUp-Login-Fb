@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import {auth} from '../../services/firebase'
+import { signInWithEmailAndPassword } from "firebase/auth"
 
 function Login() {
   const navigate = useNavigate()
@@ -9,9 +11,28 @@ function Login() {
     userPass : '',
   })
 
+  //  <-------- USEROBJECT STATE CHANGED  BY INPUT VALUES ------->
   const  userValueChanged = (e) => {
-     console.log(e.target.name);
-     
+    // console.log(e.target.name, e.target.value);
+    setUserOj({...userObj, [e.target.name] : e.target.value})
+  }
+
+  //  <-------- HANDLE SIGNUP FUNCTION PERFORM AUTHNTICATION TASK WITH FIREBSE  ------->
+
+  const handleLogIn =  async (e) => {
+       
+    e.preventDefault();   // Page ko Refresh nhi hone da rha
+    
+    try{                       /// CHECK EMAIL AND PASSWORD MATCH  FIREBSE USER EMAIL AND PASSWORD
+      let data = await signInWithEmailAndPassword(auth, userObj.userEmail, userObj.userPass)
+      console.log(data);
+      alert('LOGIN SUCESSFULLY ✔') 
+      navigate('/home')
+    }
+    catch(error) {
+      // console.error(error.message, error.code);
+       alert(`${error.code} ❌`)
+    }
   }
 
 
@@ -24,7 +45,7 @@ function Login() {
 
       <h1 className="font-bold text-3xl">Login</h1>
 
-       <form className="mt-9 leading-10  px-2 py-3">
+       <form onSubmit={handleLogIn} className="mt-9 leading-10  px-2 py-3">
         <div className="border-1 rounded-sm px-3 py-4">
        <input
          type="email"
