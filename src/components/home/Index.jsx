@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 function Home() {
   return (
@@ -11,7 +12,7 @@ function Home() {
               <li>Home</li>
               <li>About</li>
               <li>Contact</li>
-              <li>LogOut</li>
+             <Link to='/login'><li>LogOut</li></Link>
             </ul>
          </nav>
       </header>

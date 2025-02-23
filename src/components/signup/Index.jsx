@@ -40,10 +40,10 @@ function SignUp() {
    }  
 
   return (
-    <div className="w-[420px] mx-auto md:mt-7"> 
+    <div className="w-full md:w-[420px] mx-auto md:mt-7"> 
       <img src="/S1.png" alt="Mainimg" className="rounded-sm" />
 
-      <div className="mt-4.5 bg-white rounded-2xl relative bottom-10 z-50 px-5.5 py-9">
+      <div className="mt-4.5 bg-white rounded-2xl relative bottom-10 z-50 md:px-5.5 px-2 py-9">
 
         <h1 className="font-bold text-3xl">SignUp</h1>
 
